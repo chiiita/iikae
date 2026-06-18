@@ -31,107 +31,118 @@
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
-  body{
-    font-family:var(--sans); background:var(--bg); color:var(--ink);
-    line-height:1.85; font-weight:400; letter-spacing:.012em; font-size:16px;
-    -webkit-text-size-adjust:100%; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
-  }
+  body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.85;font-weight:400;
+    letter-spacing:.012em;font-size:16px;-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
   .wrap{max-width:720px;margin:0 auto;padding:0 22px 96px}
 
-  /* ---- hero ---- */
-  header.hero{text-align:center;padding:60px 8px 30px}
-  .kicker{font-size:.7rem;letter-spacing:.32em;color:var(--gold);font-weight:500;margin:0 0 20px;text-indent:.32em}
-  .hero h1{font-family:var(--serif);font-weight:700;font-size:2rem;line-height:1.5;margin:0 0 18px;letter-spacing:.02em}
-  .hero h1 .thin{font-size:1.1rem;display:block;color:var(--ink-soft);font-weight:500;margin-top:8px;letter-spacing:.04em}
-  .hr-deco{width:40px;height:1px;background:var(--gold);margin:22px auto;opacity:.7}
-  .hero p{color:var(--ink-soft);font-size:.9rem;margin:0;font-weight:400}
-  .meta-note{color:var(--sub);font-size:.72rem;letter-spacing:.1em;margin-top:14px}
+  /* hero */
+  header.hero{text-align:center;padding:54px 8px 22px}
+  .kicker{font-size:.7rem;letter-spacing:.32em;color:var(--gold);font-weight:500;margin:0 0 18px;text-indent:.32em}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:1.9rem;line-height:1.5;margin:0 0 16px;letter-spacing:.02em}
+  .hero h1 .thin{font-size:1.05rem;display:block;color:var(--ink-soft);font-weight:500;margin-top:8px;letter-spacing:.04em}
+  .hr-deco{width:40px;height:1px;background:var(--gold);margin:20px auto;opacity:.7}
+  .hero p{color:var(--ink-soft);font-size:.88rem;margin:0}
 
-  /* ---- step panels ---- */
-  .panel{background:var(--card);border:1px solid var(--rule);border-radius:var(--radius);padding:26px 24px;margin:18px 0}
-  .step-label{font-family:var(--sans);font-size:1rem;font-weight:700;margin:0 0 18px;
-    display:flex;align-items:baseline;gap:12px;letter-spacing:.03em;color:var(--ink)}
-  .step-no{font-family:var(--serif);font-size:.82rem;color:var(--gold);font-weight:600;
-    letter-spacing:.1em;border-bottom:1px solid var(--gold);padding-bottom:1px;flex:0 0 auto}
+  /* global search */
+  .gsearch{margin:26px 0 12px;position:relative}
+  .gsearch input{width:100%;border:1.5px solid var(--rule);border-radius:12px;background:#fff;
+    padding:15px 46px 15px 18px;font-size:1rem;font-family:var(--sans);color:var(--ink);box-shadow:0 1px 2px rgba(80,60,40,.04)}
+  .gsearch input::placeholder{color:#C3BDB3}
+  .gsearch input:focus{outline:none;border-color:var(--gold)}
+  .gsearch .ico{position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:1.1rem;pointer-events:none}
+  .gsearch .clr{position:absolute;right:12px;top:50%;transform:translateY(-50%);border:none;background:transparent;color:var(--sub);
+    font-size:1.2rem;cursor:pointer;display:none;width:28px;height:28px;line-height:1}
+  .quickchips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:4px}
+  .qchip{background:#fff;border:1px solid var(--rule);border-radius:999px;padding:6px 14px;font-size:.8rem;color:var(--ink-soft);
+    cursor:pointer;transition:.15s}
+  .qchip:hover{border-color:var(--gold);color:var(--gold)}
 
-  /* ---- chips (相手) ---- */
+  /* saved bar */
+  .savedbar{background:#fff;border:1px solid var(--rule);border-radius:var(--radius);padding:14px 16px;margin:14px 0}
+  .savedbar .sb-row{margin:4px 0}
+  .savedbar .sb-lbl{font-size:.72rem;color:var(--sub);letter-spacing:.08em;font-weight:700;margin-right:8px}
+  .savechips{display:inline-flex;flex-wrap:wrap;gap:7px;vertical-align:middle}
+  .savechip{background:#fff;border:1px solid var(--rule);border-radius:999px;padding:5px 12px;font-size:.78rem;color:var(--ink);
+    cursor:pointer;transition:.15s;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .savechip:hover{border-color:var(--gold);color:var(--gold)}
+
+  /* panels */
+  .panel{background:var(--card);border:1px solid var(--rule);border-radius:var(--radius);padding:24px 22px;margin:16px 0}
+  .step-label{font-family:var(--sans);font-size:.98rem;font-weight:700;margin:0 0 16px;display:flex;align-items:baseline;gap:12px;letter-spacing:.03em}
+  .step-no{font-family:var(--serif);font-size:.82rem;color:var(--gold);font-weight:600;letter-spacing:.1em;border-bottom:1px solid var(--gold);padding-bottom:1px;flex:0 0 auto}
   #persons{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-  .chip{background:var(--card);border:1px solid var(--rule);border-radius:var(--radius);
-    padding:13px 14px;font-size:.92rem;cursor:pointer;transition:border-color .18s,color .18s;
-    user-select:none;color:var(--ink-soft);font-weight:500;display:flex;align-items:center;
+  .chip{background:var(--card);border:1px solid var(--rule);border-radius:var(--radius);padding:13px 14px;font-size:.92rem;cursor:pointer;
+    transition:border-color .18s,color .18s;user-select:none;color:var(--ink-soft);font-weight:500;display:flex;align-items:center;
     justify-content:center;text-align:center;line-height:1.5;position:relative}
   .chip:hover{border-color:var(--gold);color:var(--ink)}
   .chip.on{border-color:var(--ink);border-width:1.5px;color:var(--ink);font-weight:700;padding:12.5px 13.5px}
   .chip.on::after{content:"";position:absolute;top:8px;right:8px;width:5px;height:5px;border-radius:50%;background:var(--gold)}
   @media(max-width:560px){#persons{grid-template-columns:repeat(2,1fr)}}
 
-  /* ---- reason ---- */
-  .reason{margin:2px 0 0}
-  .reason label{display:block;font-size:.76rem;color:var(--sub);letter-spacing:.06em;margin-bottom:8px}
-  .reason input{width:100%;border:none;border-bottom:1.5px solid var(--ink);background:transparent;
-    padding:7px 2px;font-size:.92rem;font-family:var(--sans);color:var(--ink)}
-  .reason input::placeholder{color:#C3BDB3}
-  .reason input:focus{outline:none;border-bottom-color:var(--gold)}
-  .hint{font-size:.74rem;color:var(--sub);margin:12px 2px 0;line-height:1.8}
-
-  /* ---- accordion (言いたいこと) ---- */
-  .accordion{margin-top:22px;border-top:1px solid var(--rule)}
+  /* results */
+  .res-context{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:24px 2px 2px;flex-wrap:wrap}
+  .res-title{font-family:var(--serif);font-size:1.05rem;font-weight:700;color:var(--ink);letter-spacing:.03em}
+  .res-count{font-size:.74rem;color:var(--sub)}
+  .accordion{margin-top:14px;border-top:1px solid var(--rule)}
   .acc-item{border-bottom:1px solid var(--rule)}
-  .acc-head{display:flex;align-items:center;justify-content:space-between;gap:14px;
-    padding:18px 2px;cursor:pointer}
-  .acc-titlewrap{display:flex;flex-direction:column;gap:7px;min-width:0}
-  .acc-title{font-family:var(--serif);font-size:1.06rem;font-weight:700;color:var(--ink);
-    letter-spacing:.02em;line-height:1.5;transition:color .15s}
+  .acc-head{display:flex;align-items:center;gap:12px;padding:17px 2px;cursor:pointer}
+  .acc-star{flex:0 0 auto;border:none;background:transparent;color:var(--rule);font-size:1.2rem;cursor:pointer;line-height:1;padding:2px;transition:.15s}
+  .acc-star.on{color:var(--gold)}
+  .acc-star:hover{color:var(--gold)}
+  .acc-titlewrap{flex:1;display:flex;flex-direction:column;gap:6px;min-width:0}
+  .acc-title{font-family:var(--serif);font-size:1.04rem;font-weight:700;color:var(--ink);letter-spacing:.02em;line-height:1.5;transition:color .15s}
   .acc-head:hover .acc-title{color:var(--gold)}
-  .acc-tags{display:flex;align-items:center;gap:9px}
-  .scene-tag{font-size:.66rem;letter-spacing:.18em;color:var(--gold);font-weight:500;text-transform:uppercase}
+  .acc-tags{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .person-tag{font-size:.66rem;letter-spacing:.06em;color:#fff;background:var(--gold);border-radius:4px;padding:1px 7px;font-weight:500}
+  .scene-tag{font-size:.66rem;letter-spacing:.16em;color:var(--gold);font-weight:500}
   .lineflag{font-size:.64rem;letter-spacing:.06em;color:var(--sub);border:1px solid var(--rule);border-radius:4px;padding:1px 7px}
-  .acc-toggle{flex:0 0 auto;width:28px;height:28px;border:1px solid var(--rule);border-radius:50%;
-    display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.05rem;
-    line-height:1;transition:.2s;font-weight:400}
+  .acc-toggle{flex:0 0 auto;width:28px;height:28px;border:1px solid var(--rule);border-radius:50%;display:flex;align-items:center;
+    justify-content:center;color:var(--gold);font-size:1.05rem;line-height:1;transition:.2s}
   .acc-item.open .acc-toggle{background:var(--ink);border-color:var(--ink);color:#fff}
-
-  .acc-body{padding:2px 2px 24px;animation:fade .35s ease both}
+  .acc-body{padding:2px 2px 22px;animation:fade .35s ease both}
   @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
-  .ng{margin:0 0 6px;padding:14px 14px;background:var(--rule-soft);border-radius:6px;
-    font-size:.82rem;color:var(--ink-soft);line-height:1.75}
+  .cardreason{margin:2px 0 14px}
+  .cardreason input{width:100%;border:none;border-bottom:1.5px solid var(--rule);background:transparent;padding:8px 2px;
+    font-size:.9rem;font-family:var(--sans);color:var(--ink)}
+  .cardreason input::placeholder{color:#C3BDB3}
+  .cardreason input:focus{outline:none;border-bottom-color:var(--gold)}
+
+  .ng{margin:0 0 4px;padding:12px 14px;background:var(--rule-soft);border-radius:6px;font-size:.82rem;color:var(--ink-soft);line-height:1.75}
   .ng .lbl{font-family:var(--serif);color:#B08068;font-weight:600;margin-right:8px;letter-spacing:.04em}
 
-  .tone{padding:18px 0 4px;border-top:1px solid var(--rule-soft)}
-  .tone-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+  .tone{padding:16px 0 4px;border-top:1px solid var(--rule-soft)}
+  .tone-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
   .tone-name{display:flex;align-items:center;gap:10px}
   .dots{letter-spacing:2px;font-size:.7rem;color:var(--gold)}
-  .tone-label{font-family:var(--sans);font-size:.86rem;font-weight:700;letter-spacing:.04em;color:var(--ink)}
-  .tone-note{font-size:.68rem;color:var(--sub);letter-spacing:.04em}
-  .copy{background:transparent;border:1px solid var(--rule);border-radius:6px;padding:5px 13px;
-    font-size:.72rem;cursor:pointer;color:var(--sub);font-weight:500;white-space:nowrap;
-    transition:.18s;font-family:var(--sans);letter-spacing:.06em}
-  .copy:hover{border-color:var(--gold);color:var(--gold)}
-  .copy.done{border-color:var(--gold);color:var(--gold);background:var(--gold-tint)}
+  .tone-label{font-family:var(--sans);font-size:.84rem;font-weight:700;letter-spacing:.04em;color:var(--ink)}
+  .tone-note{font-size:.68rem;color:var(--sub)}
+  .tone-btns{display:flex;gap:7px;flex:0 0 auto}
+  .btn{background:transparent;border:1px solid var(--rule);border-radius:6px;padding:5px 12px;font-size:.72rem;cursor:pointer;
+    color:var(--sub);font-weight:500;white-space:nowrap;transition:.18s;font-family:var(--sans);letter-spacing:.04em}
+  .btn:hover{border-color:var(--gold);color:var(--gold)}
+  .btn.done{border-color:var(--gold);color:var(--gold);background:var(--gold-tint)}
   .quote{position:relative;padding-left:18px;font-size:1rem;line-height:1.95;color:var(--ink);letter-spacing:.02em}
   .quote::before{content:"";position:absolute;left:0;top:.35em;bottom:.35em;width:2px;background:var(--gold);opacity:.55;border-radius:2px}
   .ph{color:var(--gold);font-weight:500;border-bottom:1px dotted var(--gold);padding-bottom:1px}
+  .ph.rsn{background:var(--gold-tint);border-bottom:none;border-radius:3px;padding:0 4px}
 
-  .hint-empty{text-align:center;color:var(--sub);padding:48px 16px;font-size:.86rem;letter-spacing:.04em}
-  .hint-empty .big{font-family:var(--serif);font-size:1.5rem;display:block;margin-bottom:14px;color:var(--rule);letter-spacing:.3em}
+  .hint-empty{text-align:center;color:var(--sub);padding:40px 16px;font-size:.86rem;letter-spacing:.04em}
+  .hint-empty .big{font-family:var(--serif);font-size:1.5rem;display:block;margin-bottom:12px;color:var(--rule);letter-spacing:.3em}
 
-  /* ---- tip ---- */
-  .tip{font-size:.8rem;color:var(--ink-soft);border:1px solid var(--rule);border-radius:var(--radius);
-    padding:20px 22px;margin:24px 0;line-height:1.95}
-  .tip .tip-h{font-family:var(--serif);color:var(--gold);font-weight:600;letter-spacing:.06em;display:block;margin-bottom:8px;font-size:.88rem}
+  .tip{font-size:.8rem;color:var(--ink-soft);border:1px solid var(--rule);border-radius:var(--radius);padding:18px 20px;margin:24px 0;line-height:1.9}
+  .tip .tip-h{font-family:var(--serif);color:var(--gold);font-weight:600;letter-spacing:.06em;display:block;margin-bottom:8px;font-size:.86rem}
   .tip b{color:var(--ink);font-weight:600}
 
-  footer{text-align:center;color:var(--sub);font-size:.7rem;margin-top:44px;line-height:2;letter-spacing:.06em}
+  footer{text-align:center;color:var(--sub);font-size:.7rem;margin-top:40px;line-height:2;letter-spacing:.06em}
   .foot-rule{width:30px;height:1px;background:var(--rule);margin:0 auto 18px}
 
   @media(max-width:480px){
     .wrap{padding:0 16px 80px}
-    .hero{padding:44px 4px 24px}
-    .hero h1{font-size:1.6rem}
-    .hero h1 .thin{font-size:1rem}
-    .panel{padding:22px 18px}
-    .acc-title{font-size:1.02rem}
+    .hero{padding:40px 4px 18px}
+    .hero h1{font-size:1.55rem}
+    .panel{padding:20px 16px}
+    .acc-title{font-size:1rem}
     .quote{font-size:.96rem}
   }
 </style>
@@ -143,30 +154,29 @@
     <p class="kicker">KADO GA TATANAI</p>
     <h1>角を立てずに、伝える。<span class="thin">言い換えの作法</span></h1>
     <div class="hr-deco"></div>
-    <p>言いたいのに、言葉が出てこない。<br>相手と「言いたいこと」を選ぶだけで、角が立たない言い方が見つかります。</p>
-    <p class="meta-note">登録不要　・　無料　・　コピーして使えます</p>
+    <p>言いたいのに、言葉が出てこない。そんな時に。</p>
+    <div class="gsearch">
+      <input id="gsearch" type="text" autocomplete="off" placeholder="こんなこと言いたい…（例：誘いを断る／休みたい／お礼）">
+      <span class="ico">⌕</span>
+      <button class="clr" id="gclear" aria-label="クリア">×</button>
+    </div>
+    <div class="quickchips" id="quickchips"></div>
   </header>
 
-  <div class="panel">
-    <p class="step-label"><span class="step-no">01</span>だれに伝える？</p>
+  <div class="savedbar" id="savedbar" style="display:none"></div>
+
+  <div class="panel" id="personPanel">
+    <p class="step-label"><span class="step-no">01</span>相手から選ぶ</p>
     <div id="persons"></div>
   </div>
 
-  <div class="panel" id="step2" style="display:none">
-    <p class="step-label"><span class="step-no">02</span>言いたいことを選ぶ</p>
-    <div class="reason">
-      <label for="searchInput">言いたいことで探す（任意）</label>
-      <input id="searchInput" type="text" placeholder="例：休みたい ／ 断りたい ／ 誘い ／ お願い　…空欄なら全部表示">
-    </div>
-    <p class="hint">ざっくり入力すると、近い項目にしぼれます。空欄なら全項目を表示。タップで角が立たない言い方が3つ出てきます。</p>
-    <div id="situations" class="accordion"></div>
-  </div>
+  <div id="results"></div>
 
-  <div class="tip" id="tip" style="display:none">
-    <span class="tip-h">トーンの選び方</span>
-    トーンは<b>伝える強さの3段階</b>です。<br>
-    ・<b>やわらか</b>＝控えめに、余白を残す　・<b>標準</b>＝はっきり、でも穏やか　・<b>きっぱり</b>＝しっかり言い切る。<br>
-    相手やしつこさに応じて選んでください。曖昧な返事は、あとで角が立つこともあります。
+  <div class="tip" id="tip">
+    <span class="tip-h">使い方のヒント</span>
+    トーンは<b>伝える強さの3段階</b>（やわらか／標準／きっぱり）。迷ったら<b>「標準」</b>。<br>
+    カードを開いて「自分の事情」を一言入れると、◯◯の部分が埋まって<b>そのまま送れる文</b>に。<br>
+    ★を押すと保存、コピーした言い方は「最近使った」に残ります。<b>送る前にこれで大丈夫、と思えたらOK。</b>
   </div>
 
   <footer>
@@ -180,116 +190,165 @@
 <script src="data/phrases.js"></script>
 <script>
 (function(){
-  const state = { person:null, openId:null, query:"" };
-  const $ = (s,el=document)=>el.querySelector(s);
-  const el = (t,c)=>{const e=document.createElement(t); if(c)e.className=c; return e;};
-  const esc = s=>s.replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]));
-  const sceneLabel = k=>{const s=SCENES.find(x=>x.key===k);return s?s.label:"";};
+  const $=(s,el=document)=>el.querySelector(s);
+  const el=(t,c)=>{const e=document.createElement(t);if(c)e.className=c;return e;};
+  const esc=s=>String(s).replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]));
+  const sceneLabel=k=>{const s=SCENES.find(x=>x.key===k);return s?s.label:'';};
+  const personLabel=k=>{const p=PERSONS.find(x=>x.key===k);return p?p.label:'';};
+  const byId=id=>PHRASES.find(p=>p.id===id);
 
-  const TONES = [
-    {key:"soft",     label:"やわらか", note:"控えめ・余白あり",     dots:"●○○"},
-    {key:"standard", label:"標準",     note:"はっきり、でも穏やか", dots:"●●○"},
-    {key:"firm",     label:"きっぱり", note:"しっかり言い切る",     dots:"●●●"},
+  const TONES=[
+    {key:"soft",label:"やわらか",note:"控えめ・余白あり",dots:"●○○"},
+    {key:"standard",label:"標準",note:"はっきり、でも穏やか",dots:"●●○"},
+    {key:"firm",label:"きっぱり",note:"しっかり言い切る",dots:"●●●"},
+  ];
+  const QUICK=[
+    {label:"誘いを断る",q:"誘い 断る"},{label:"休みを取りたい",q:"休みたい"},
+    {label:"お願いする",q:"お願い"},{label:"不満を伝える",q:"不満"},
+    {label:"謝る",q:"謝る"},{label:"距離を置く",q:"距離"},{label:"お礼を伝える",q:"お礼 感謝"},
   ];
 
-  // ---- Step1: persons ----
-  const pBox = $("#persons");
-  PERSONS.forEach(p=>{
-    const c = el("div","chip"); c.textContent = p.label; c.dataset.key=p.key;
-    c.onclick = ()=>{
-      state.person=p.key; state.openId=null;
-      [...pBox.children].forEach(x=>x.classList.toggle("on", x.dataset.key===state.person));
-      $("#step2").style.display="block"; $("#tip").style.display="block";
-      renderList();
-      $("#step2").scrollIntoView({behavior:"smooth",block:"start"});
-    };
-    pBox.appendChild(c);
-  });
+  // ---- localStorage ----
+  const LS={ get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}}, set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}} };
+  const state={ person:null, query:"", openId:null, focusId:null, reason:"",
+    fav:new Set(LS.get('iikae.fav',[])), recent:LS.get('iikae.recent',[]) };
+  const saveFav=()=>LS.set('iikae.fav',[...state.fav]);
+  const saveRecent=()=>LS.set('iikae.recent',state.recent);
+  function addRecent(id){ state.recent=[id,...state.recent.filter(x=>x!==id)].slice(0,8); saveRecent(); renderSaved(); }
+  function toggleFav(id){ state.fav.has(id)?state.fav.delete(id):state.fav.add(id); saveFav(); renderSaved(); }
 
-  // ---- search (live filter) ----
-  $("#searchInput").addEventListener("input", e=>{ state.query=e.target.value.trim(); renderList(); });
+  // ---- placeholder render (reason replaces FIRST bracket) ----
+  const PH_RE=/[｛{]([^｝}]*)[｝}]/g;
+  const phVal=i=>{const t=(i||'').trim();return (t===''||t==='理由')?'◯◯':i;};
+  function renderQuote(text,reason){ let done=false;
+    return esc(text).replace(PH_RE,(m,inner)=>{ if(reason&&!done){done=true;return `<span class="ph rsn">${esc(reason)}</span>`;} return `<span class="ph">${phVal(inner)}</span>`; }); }
+  function plainQuote(text,reason){ let done=false;
+    return text.replace(PH_RE,(m,inner)=>{ if(reason&&!done){done=true;return reason;} return phVal(inner); }); }
 
-  // ---- プレースホルダ描画（｛…｝/{…} を編集箇所として表示） ----
-  const PH_RE = /[｛{]([^｝}]*)[｝}]/g;
-  function phVal(inner){ const t=(inner||"").trim(); return (t===""||t==="理由")?"◯◯":inner; }
-  function fillReason(text){
-    return esc(text).replace(PH_RE, (m,inner)=>`<span class="ph">${phVal(inner)}</span>`);
-  }
-  function plainReason(text){ return text.replace(PH_RE, (m,inner)=>phVal(inner)); }
-
-  // ---- 類似マッチ（日本語の活用ゆれに強く） ----
-  function matchEntry(p, tokens){
-    const hay = (p.title+" "+sceneLabel(p.scene)+" "+(p.kw||"")+" "+p.ng+" "+p.soft+" "+p.standard+" "+p.firm).toLowerCase();
-    return tokens.every(t=>{
-      if(hay.indexOf(t)>=0) return true;                 // 完全一致
-      const cands = [];
-      if(t.length>=2) cands.push(t.slice(0,-1));          // 語尾を1字落とす（誘う→誘, 断り→断）
-      const kanji = (t.match(/^[々一-龯]+/)||[])[0]; // 先頭の漢字部分（誘う→誘, 休みたい→休）
-      if(kanji) cands.push(kanji);
-      if(t.length>=3) cands.push(t.slice(0,2));           // 先頭2字
-      return cands.some(c=>c.length>=1 && hay.indexOf(c)>=0);
-    });
+  // ---- search match (活用ゆれに強い) ----
+  function matchEntry(p,tokens){
+    const hay=(p.title+' '+sceneLabel(p.scene)+' '+(p.kw||'')+' '+p.ng+' '+p.soft+' '+p.standard+' '+p.firm).toLowerCase();
+    return tokens.every(t=>{ if(hay.indexOf(t)>=0)return true; const c=[];
+      if(t.length>=2)c.push(t.slice(0,-1)); const kj=(t.match(/^[々一-龯]+/)||[])[0]; if(kj)c.push(kj); if(t.length>=3)c.push(t.slice(0,2));
+      return c.some(x=>x.length>=1&&hay.indexOf(x)>=0); });
   }
 
-  // ---- accordion list ----
-  function buildTone(p,t){
-    const tn = el("div","tone");
-    const head = el("div","tone-head");
-    const nm = el("div","tone-name");
-    nm.innerHTML = `<span class="dots">${t.dots}</span><span class="tone-label">${t.label}</span><span class="tone-note">${t.note}</span>`;
-    const btn = el("button","copy"); btn.textContent="コピー";
-    btn.onclick = (ev)=>{
-      ev.stopPropagation();
-      const txt = plainReason(p[t.key]);
-      const ok=()=>{ btn.textContent="✓ コピーしました"; btn.classList.add("done"); setTimeout(()=>{btn.textContent="コピー";btn.classList.remove("done");},1500); };
-      if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(ok,ok); }
-      else{ const ta=el("textarea");ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand("copy")}catch(e){}ta.remove();ok(); }
+  // ---- quick chips ----
+  const qbox=$("#quickchips");
+  QUICK.forEach(q=>{ const c=el("div","qchip"); c.textContent=q.label;
+    c.onclick=()=>{ $("#gsearch").value=q.q; setQuery(q.q); }; qbox.appendChild(c); });
+
+  // ---- persons ----
+  const pBox=$("#persons");
+  PERSONS.forEach(p=>{ const c=el("div","chip"); c.textContent=p.label; c.dataset.key=p.key;
+    c.onclick=()=>{ state.person=p.key; state.query=""; state.focusId=null; state.openId=null; state.reason="";
+      $("#gsearch").value=""; $("#gclear").style.display="none";
+      [...pBox.children].forEach(x=>x.classList.toggle("on",x.dataset.key===state.person));
+      render(); $("#results").scrollIntoView({behavior:"smooth",block:"start"}); };
+    pBox.appendChild(c); });
+
+  // ---- global search ----
+  function setQuery(q){ state.query=q.trim(); state.focusId=null; state.openId=null; state.reason="";
+    state.person=null; [...pBox.children].forEach(x=>x.classList.remove("on"));
+    $("#gclear").style.display=state.query?"block":"none"; render(); }
+  $("#gsearch").addEventListener("input",e=>setQuery(e.target.value));
+  $("#gclear").onclick=()=>{ $("#gsearch").value=""; setQuery(""); };
+
+  // ---- saved bar ----
+  function renderSaved(){
+    const bar=$("#savedbar");
+    const favIds=[...state.fav].filter(byId);
+    const recIds=state.recent.filter(byId);
+    if(!favIds.length && !recIds.length){ bar.style.display="none"; bar.innerHTML=""; return; }
+    bar.style.display="block"; bar.innerHTML="";
+    const mk=(ids,lbl)=>{ if(!ids.length)return;
+      const row=el("div","sb-row"); row.innerHTML=`<span class="sb-lbl">${lbl}</span>`;
+      const wrap=el("span","savechips");
+      ids.forEach(id=>{ const p=byId(id); const c=el("span","savechip"); c.textContent=p.title; c.title=personLabel(p.person)+'：'+p.title;
+        c.onclick=()=>{ state.focusId=id; state.openId=id; state.query=""; state.person=null; state.reason="";
+          $("#gsearch").value=""; $("#gclear").style.display="none"; [...pBox.children].forEach(x=>x.classList.remove("on"));
+          render(); $("#results").scrollIntoView({behavior:"smooth",block:"start"}); };
+        wrap.appendChild(c); });
+      row.appendChild(wrap); bar.appendChild(row);
     };
-    head.appendChild(nm); head.appendChild(btn);
-    const q = el("div","quote"); q.innerHTML = fillReason(p[t.key]);
+    mk(favIds,"★ お気に入り"); mk(recIds,"🕐 最近使った");
+  }
+
+  // ---- build one tone ----
+  function buildTone(p,t,getReason){
+    const tn=el("div","tone");
+    const head=el("div","tone-head");
+    const nm=el("div","tone-name");
+    nm.innerHTML=`<span class="dots">${t.dots}</span><span class="tone-label">${t.label}</span><span class="tone-note">${t.note}</span>`;
+    const btns=el("div","tone-btns");
+    const copy=el("button","btn"); copy.textContent="コピー";
+    copy.onclick=()=>{ const txt=plainQuote(p[t.key],getReason()); doCopy(txt,copy); addRecent(p.id); };
+    btns.appendChild(copy);
+    if(navigator.share){ const sh=el("button","btn"); sh.textContent="送る";
+      sh.onclick=async()=>{ const txt=plainQuote(p[t.key],getReason()); try{ await navigator.share({text:txt}); addRecent(p.id); }catch(e){} };
+      btns.appendChild(sh); }
+    head.appendChild(nm); head.appendChild(btns);
+    const q=el("div","quote"); q.dataset.src=p[t.key]; q.innerHTML=renderQuote(p[t.key],getReason());
     tn.appendChild(head); tn.appendChild(q);
     return tn;
   }
+  function doCopy(txt,btn){
+    const ok=()=>{ const o=btn.textContent; btn.textContent="✓ コピー"; btn.classList.add("done"); setTimeout(()=>{btn.textContent=o;btn.classList.remove("done");},1400); };
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(ok,ok); }
+    else{ const ta=el("textarea");ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand("copy")}catch(e){}ta.remove();ok(); }
+  }
 
-  function renderList(){
-    const box = $("#situations"); box.innerHTML="";
-    let list = PHRASES.filter(p=>p.person===state.person);
-    const q = state.query.toLowerCase();
-    if(q){
-      const tokens = q.split(/[\s、,　・/]+/).filter(Boolean);
-      list = list.filter(p=>matchEntry(p,tokens));
-    }
-    if(!list.length){
-      const msg = q
-        ? `「${esc(state.query)}」に近い項目が見つかりませんでした。`
-        : "準備中です。別の相手を選んでください。";
-      const showAll = q ? '<button class="copy" id="clearSearch" style="margin-top:14px">すべて表示</button>' : '';
-      box.innerHTML = `<div class="hint-empty"><span class="big">― ― ―</span>${msg}${showAll}</div>`;
-      const cs = $("#clearSearch"); if(cs) cs.onclick=()=>{ state.query=""; $("#searchInput").value=""; renderList(); };
-      return;
-    }
+  // ---- render results ----
+  function currentList(){
+    if(state.focusId){ const p=byId(state.focusId); return {list:p?[p]:[], title:"保存した言い方", showPerson:true}; }
+    if(state.query){ const tk=state.query.toLowerCase().split(/[\s、,　・/]+/).filter(Boolean);
+      const list=PHRASES.filter(p=>matchEntry(p,tk)); return {list, title:`「${state.query}」の検索結果`, showPerson:true}; }
+    if(state.person){ return {list:PHRASES.filter(p=>p.person===state.person), title:`${personLabel(state.person)}への言い方`, showPerson:false}; }
+    return {list:null};
+  }
+  const results=$("#results");
+  function render(){
+    results.innerHTML="";
+    const {list,title,showPerson}=currentList();
+    if(list===null){ results.innerHTML=`<div class="hint-empty"><span class="big">― ― ―</span>上の検索か、相手を選んでください。</div>`; return; }
+    const ctx=el("div","res-context");
+    ctx.innerHTML=`<span class="res-title">${esc(title)}</span><span class="res-count">${list.length}件</span>`;
+    results.appendChild(ctx);
+    if(!list.length){ const h=el("div","hint-empty"); h.innerHTML=`<span class="big">― ― ―</span>近い言い方が見つかりませんでした。別の言葉で探してみてください。`; results.appendChild(h); return; }
+    const acc=el("div","accordion");
     list.forEach(p=>{
-      const open = state.openId===p.id;
-      const item = el("div","acc-item"+(open?" open":""));
-      const head = el("div","acc-head");
-      const tw = el("div","acc-titlewrap");
-      const tt = el("div","acc-title"); tt.textContent = p.title;
-      const tags = el("div","acc-tags");
-      tags.innerHTML = `<span class="scene-tag">${sceneLabel(p.scene)}</span>` + (p.line?`<span class="lineflag">LINE向き</span>`:"");
+      const open=state.openId===p.id;
+      const item=el("div","acc-item"+(open?" open":""));
+      const head=el("div","acc-head");
+      const star=el("button","acc-star"+(state.fav.has(p.id)?" on":"")); star.textContent=state.fav.has(p.id)?"★":"☆";
+      star.title="お気に入り"; star.onclick=(ev)=>{ev.stopPropagation();toggleFav(p.id);star.classList.toggle("on",state.fav.has(p.id));star.textContent=state.fav.has(p.id)?"★":"☆";};
+      const tw=el("div","acc-titlewrap");
+      const tt=el("div","acc-title"); tt.textContent=p.title;
+      const tags=el("div","acc-tags");
+      tags.innerHTML=(showPerson?`<span class="person-tag">${personLabel(p.person)}</span>`:"")+`<span class="scene-tag">${sceneLabel(p.scene)}</span>`+(p.line?`<span class="lineflag">LINE向き</span>`:"");
       tw.appendChild(tt); tw.appendChild(tags);
-      const tg = el("div","acc-toggle"); tg.textContent = open ? "−" : "＋";
-      head.appendChild(tw); head.appendChild(tg);
-      head.onclick = ()=>{ state.openId = open ? null : p.id; renderList(); };
+      const tg=el("div","acc-toggle"); tg.textContent=open?"−":"＋";
+      head.appendChild(star); head.appendChild(tw); head.appendChild(tg);
+      head.onclick=()=>{ state.openId=open?null:p.id; if(!open)state.reason=""; render(); };
       item.appendChild(head);
       if(open){
-        const body = el("div","acc-body");
-        const ng = el("div","ng"); ng.innerHTML = `<span class="lbl">言いがち</span>${esc(p.ng)}`; body.appendChild(ng);
-        TONES.forEach(t=>{ if(p[t.key]) body.appendChild(buildTone(p,t)); });
+        const body=el("div","acc-body");
+        // reason input
+        const rwrap=el("div","cardreason");
+        const rin=el("input"); rin.type="text"; rin.value=state.reason||""; rin.placeholder="自分の事情を一言（任意）→ ◯◯ に入ります　例：子どもの行事";
+        const getReason=()=>rin.value.trim();
+        rin.addEventListener("input",()=>{ state.reason=rin.value; [...body.querySelectorAll('.quote')].forEach(q=>{ q.innerHTML=renderQuote(q.dataset.src,getReason()); }); });
+        rwrap.appendChild(rin); body.appendChild(rwrap);
+        const ng=el("div","ng"); ng.innerHTML=`<span class="lbl">言いがち</span>${esc(p.ng)}`; body.appendChild(ng);
+        TONES.forEach(t=>{ if(p[t.key]) body.appendChild(buildTone(p,t,getReason)); });
         item.appendChild(body);
       }
-      box.appendChild(item);
+      acc.appendChild(item);
     });
+    results.appendChild(acc);
   }
+
+  renderSaved(); render();
 })();
 </script>
 </body>

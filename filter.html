@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>コメント毒抜きフィルター｜汚い言葉を見ないで済む（SNSアンチ対策）</title>
-<meta name="description" content="SNSで来たアンチ・誹謗中傷コメントを貼り付けると、汚い言葉・暴言を伏せ字にして表示。暴言の数を先に教えるので、見るかどうかを自分で選べます。気分を守るための毒抜きフィルター。">
+<title>コメント翻訳機｜アンチの暴言を、要は何かに翻訳（SNSアンチ対策）</title>
+<meta name="description" content="SNSのアンチ・誹謗中傷コメントを貼ると、汚い言葉を伏せ字にし、攻撃の型を判定して『要は何が言いたいか』に翻訳。受け取る価値があるか（スルー推奨か）も提示。完全ブラウザ内処理・AI不使用。">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23FAF9F6'/><text x='32' y='47' font-size='34' text-anchor='middle' fill='%239C6B3F' font-family='serif'>守</text></svg>">
 <link rel="canonical" href="https://chiiita.github.io/iikae/filter.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="コメント毒抜きフィルター｜汚い言葉を見ないで済む">
-<meta property="og:description" content="アンチコメントを貼ると、暴言を伏せ字に。数を先に教えるので、見るかどうか自分で選べます。気分を守るための防御ツール。">
+<meta property="og:title" content="コメント翻訳機｜アンチの暴言を『要は何か』に翻訳">
+<meta property="og:description" content="アンチコメントを貼ると、暴言を伏せ字に＋『要はこういうこと』に翻訳＋スルー判定。気分を守る防御ツール。">
 <meta property="og:url" content="https://chiiita.github.io/iikae/filter.html">
 <meta property="og:image" content="https://chiiita.github.io/iikae/ogp.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -21,8 +21,7 @@
     --gold:#9C6B3F;--gold-tint:#F3EBE0;--radius:8px;--serif:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
     --sans:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;--soft:#5b9b6f;--soft-tint:#EAF3EC;--warn:#C2664F;--warn-tint:#F7ECEC;}
   *{box-sizing:border-box}html,body{margin:0;padding:0}
-  body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.85;font-size:16px;letter-spacing:.012em;
-    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.85;font-size:16px;letter-spacing:.012em;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
   .wrap{max-width:680px;margin:0 auto;padding:0 22px 90px}
   .nav{display:flex;justify-content:center;gap:18px;padding:18px 0 0;font-size:.78rem}
   .nav a{color:var(--sub);text-decoration:none;border-bottom:1px solid transparent;padding-bottom:2px}
@@ -36,31 +35,34 @@
 
   .panel{background:var(--card);border:1px solid var(--rule);border-radius:var(--radius);padding:22px;margin:16px 0}
   .lbl{font-size:.8rem;color:var(--sub);font-weight:700;letter-spacing:.04em;margin:0 0 10px}
-  textarea{width:100%;min-height:120px;border:1.5px solid var(--rule);border-radius:10px;padding:14px;font-size:1rem;
-    font-family:var(--sans);color:var(--ink);line-height:1.8;resize:vertical;background:#fff}
-  textarea::placeholder{color:#C3BDB3}
-  textarea:focus{outline:none;border-color:var(--gold)}
+  textarea{width:100%;min-height:120px;border:1.5px solid var(--rule);border-radius:10px;padding:14px;font-size:1rem;font-family:var(--sans);color:var(--ink);line-height:1.8;resize:vertical;background:#fff}
+  textarea::placeholder{color:#C3BDB3} textarea:focus{outline:none;border-color:var(--gold)}
   .row{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
-  .btn{border:1px solid var(--rule);background:#fff;border-radius:999px;padding:9px 18px;font-size:.82rem;font-family:var(--sans);
-    color:var(--ink-soft);cursor:pointer;font-weight:600;transition:.15s}
+  .btn{border:1px solid var(--rule);background:#fff;border-radius:999px;padding:9px 18px;font-size:.82rem;font-family:var(--sans);color:var(--ink-soft);cursor:pointer;font-weight:600;transition:.15s}
   .btn:hover{border-color:var(--gold);color:var(--gold)}
   .btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
 
-  .verdict{border-radius:var(--radius);padding:16px 18px;margin:16px 0;font-size:.9rem;line-height:1.8}
+  .verdict{border-radius:var(--radius);padding:15px 18px;margin:16px 0 10px;font-size:.92rem;line-height:1.8}
   .verdict.clean{background:var(--soft-tint);border:1px solid #cfe6d7;color:#2f6b46}
   .verdict.some{background:var(--gold-tint);border:1px solid #E6D6C2;color:#7A4F2C}
   .verdict.heavy{background:var(--warn-tint);border:1px solid #ecd5cf;color:#9a3f2c}
-  .verdict b{font-weight:700}
-  .catchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-  .catchip{font-size:.72rem;background:#fff;border:1px solid var(--rule);border-radius:999px;padding:3px 10px;color:var(--ink-soft)}
+  .verdict .vlabel{font-family:var(--serif);font-weight:700;font-size:1rem}
+  .verdict .judge{font-weight:700}
+  .verdict .meta{font-size:.76rem;opacity:.85;margin-top:4px}
+  .catchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .catchip{font-size:.7rem;background:rgba(255,255,255,.6);border:1px solid var(--rule);border-radius:999px;padding:2px 9px;color:var(--ink-soft)}
 
-  .out-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:18px 2px 8px}
+  .blk{background:#fff;border:1px solid var(--rule);border-radius:var(--radius);padding:16px 18px;margin:10px 0;font-size:.92rem;line-height:1.85}
+  .blk .th{font-family:var(--serif);color:var(--gold);font-weight:600;display:block;margin-bottom:6px;font-size:.82rem;letter-spacing:.04em}
+  .blk.sample .body{color:var(--ink);background:var(--gold-tint);border-radius:6px;padding:8px 12px;display:inline-block}
+  .topicwords{color:var(--ink);font-weight:700}
+
+  .out-h{margin:18px 2px 8px}
   .out-h .t{font-family:var(--serif);font-weight:700;font-size:1rem}
   .out{background:#fff;border:1px solid var(--rule);border-radius:var(--radius);padding:18px;font-size:1rem;line-height:1.95;white-space:pre-wrap;word-break:break-word}
   .masked{background:var(--rule-soft);color:#B3ABA0;border-radius:4px;padding:0 6px;font-weight:600;letter-spacing:.05em}
   .raw-toggle{font-size:.76rem;color:var(--sub);text-align:center;margin:14px 0 0;cursor:pointer;text-decoration:underline}
-  .raw{display:none;background:#fff;border:1px dashed var(--rule);border-radius:var(--radius);padding:16px;margin-top:10px;
-    font-size:.92rem;line-height:1.9;white-space:pre-wrap;word-break:break-word;color:var(--ink-soft)}
+  .raw{display:none;background:#fff;border:1px dashed var(--rule);border-radius:var(--radius);padding:16px;margin-top:10px;font-size:.92rem;line-height:1.9;white-space:pre-wrap;word-break:break-word;color:var(--ink-soft)}
 
   .care{border:1px solid var(--rule);border-radius:var(--radius);padding:18px 20px;margin:22px 0;font-size:.82rem;color:var(--ink-soft);line-height:1.95}
   .care .h{font-family:var(--serif);color:var(--gold);font-weight:600;display:block;margin-bottom:8px;font-size:.88rem}
@@ -74,21 +76,21 @@
 <div class="wrap">
   <nav class="nav">
     <a href="index.html">言い換えメーカー</a>
-    <a href="filter.html" class="cur">毒抜きフィルター</a>
+    <a href="filter.html" class="cur">コメント翻訳機</a>
   </nav>
 
   <header class="hero">
-    <p class="kicker">DOKUNUKI FILTER</p>
-    <h1>コメント毒抜きフィルター</h1>
+    <p class="kicker">COMMENT HONYAKU</p>
+    <h1>コメント翻訳機</h1>
     <div class="hr-deco"></div>
-    <p>アンチコメントの汚い言葉を伏せ字に。<br>暴言の数を先に伝えるので、<b>見るかどうかは自分で選べます</b>。</p>
+    <p>アンチの暴言を貼ると、<b>汚い言葉を伏せて</b>＋<b>「要は何が言いたいか」に翻訳</b>。<br>受け取る価値があるか（スルーでいいか）まで教えます。</p>
   </header>
 
   <div class="panel">
     <p class="lbl">気になるコメントを貼り付け</p>
-    <textarea id="inp" placeholder="ここにSNSのコメントを貼り付け…（このページから外部に送信されません。すべてあなたの端末内で処理されます）"></textarea>
+    <textarea id="inp" placeholder="ここにSNSのコメントを貼り付け…（外部に送信されません。すべてあなたの端末内で処理されます）"></textarea>
     <div class="row">
-      <button class="btn primary" id="run">毒抜きして見る</button>
+      <button class="btn primary" id="run">翻訳して見る</button>
       <button class="btn" id="clear">クリア</button>
     </div>
   </div>
@@ -97,14 +99,14 @@
 
   <div class="care">
     <span class="h">読む前に</span>
-    悪意だけの言葉は、<b>あなたの価値とは関係ありません</b>。伏せ字以外の部分に役に立つ指摘があれば拾って、なければ<b>そっと閉じてOK</b>。<br>
-    つらいときは、無理に読まない・通報やブロックをする・信頼できる人に話す——どれも正しい選択です。
+    悪意だけの言葉は、<b>あなたの価値とは関係ありません</b>。翻訳で「中身がある」と出た所だけ拾って、なければ<b>そっと閉じてOK</b>。<br>
+    つらいときは、無理に読まない・ミュート/ブロック・通報・信頼できる人に話す——どれも正しい選択です。
   </div>
 
   <footer>
     <div class="foot-rule"></div>
-    コメント毒抜きフィルター ｜ お悩み解決ツール<br>
-    すべてブラウザ内で処理され、コメントは外部に送信されません。
+    コメント翻訳機 ｜ お悩み解決ツール<br>
+    AIは使っていません。すべてブラウザ内で処理され、コメントは外部に送信されません。
   </footer>
 </div>
 
@@ -113,48 +115,77 @@
 (function(){
   const $=id=>document.getElementById(id);
   const esc=s=>String(s).replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]));
-  // 長い語から優先・重複除去
   const seen=new Set();
-  const WORDS=(typeof BADWORDS!=='undefined'?BADWORDS:[]).filter(x=>{const k=x.w;if(seen.has(k))return false;seen.add(k);return !!k;})
-    .sort((a,b)=>b.w.length-a.w.length);
-  const SENT=" ";
+  const WORDS=(typeof BADWORDS!=='undefined'?BADWORDS:[]).filter(x=>{if(seen.has(x.w))return false;seen.add(x.w);return !!x.w;}).sort((a,b)=>b.w.length-a.w.length);
+  const SENT=" ";
+
+  // 改善のヒントになり得る「トピック語」
+  const TOPICS=["音量","音","画質","解像度","テンポ","間延び","長すぎ","長い","短い","前置き","オチ","構成","編集","カット","字幕","テロップ","BGM","声","滑舌","早口","内容","中身","薄い","浅い","雑","分かりにくい","わかりにくい","説明不足","説明","情報","古い","間違い","誤り","事実","根拠","ソース","タイトル","サムネ","話し方","テーマ","ネタ"];
+
+  // 攻撃の型（上から優先判定）
+  const TYPES=[
+    {key:"quality",label:"内容・クオリティへの不満",judge:"参考程度に拾う",cls:"some",
+      test:(t,cc)=>TOPICS.some(w=>t.includes(w)),
+      yaku:"言い方はきついけど、作りについて何か引っかかった可能性。下に拾った点だけ、改善のヒントになるか見てみて。",
+      sample:"ここがもう少し良くなると、さらに見やすいと感じました。"},
+    {key:"mount",label:"上から目線・マウント",judge:"トーンは無視、中身だけ",cls:"some",
+      test:(t,cc)=>/常識|普通は|普通だろ|普通そう|にわか|勉強しろ|知らないの|当たり前|素人|レベル低/.test(t),
+      yaku:"態度は上からだけど、知識面のヒントが混じってることも。言い方は受け流して、事実の指摘だけ拾えばOK。",
+      sample:"◯◯という見方もあるよ、と共有させてください。"},
+    {key:"ability",label:"能力・才能の否定",judge:"真に受けすぎない",cls:"some",
+      test:(t,cc)=>/才能|向いて|センス|無能|下手/.test(t),
+      yaku:"『もっと良くできるはず』の乱暴な裏返しかも。ただ具体的な改善点は書かれていないので、真に受けすぎなくてOK。",
+      sample:"伸びしろを感じたので、次回作も楽しみにしています。"},
+    {key:"reject",label:"全否定・突き放し",judge:"スルー推奨",cls:"heavy",
+      test:(t,cc)=>/やめ|引退|二度と|需要ない|オワコン|いらない|来るな|来んな|消え/.test(t),
+      yaku:"強い言葉で突き放してるだけで、中身はほぼ無し。あなたを下げて気持ちよくなりたいタイプの可能性。距離を置いてOK。",
+      sample:"自分には少し合わなかったかな、と感じました。"},
+    {key:"person",label:"容姿・人格への攻撃",judge:"スルー推奨",cls:"heavy",
+      test:(t,cc)=>!!(cc["容姿"]||cc["人格・存在否定"]||cc["下品・性的"]),
+      yaku:"作品ではなく『あなた個人』を攻撃してるだけ。内容とは無関係。受け取る必要はまったくありません。",
+      sample:"（これは正当な指摘ではありません）"},
+    {key:"troll",label:"煽り・荒らし",judge:"反応しないのが一番",cls:"heavy",
+      test:(t,cc)=>/草|ｗｗ|ww|くだらな|しょうも|暇人|効いてる|釣り|かまって/.test(t),
+      yaku:"反応を見て楽しむタイプ。一番効くのは『無反応』。ミュート/ブロックも有効です。",
+      sample:"（反応せず、そっと閉じるのがおすすめ）"},
+    {key:"pure",label:"中身のない悪意",judge:"スルー推奨",cls:"heavy",
+      test:()=>true,
+      yaku:"強い不快感をぶつけたいだけで、受け取れる中身はありません。あなたの価値とは無関係です。",
+      sample:"（気にしなくて大丈夫なコメントです）"},
+  ];
 
   function maskComment(text){
-    let masked=text, count=0; const catCount={};
-    WORDS.forEach(({w,c})=>{
-      if(masked.indexOf(w)<0) return;
-      const parts=masked.split(w); const n=parts.length-1;
-      count+=n; catCount[c]=(catCount[c]||0)+n;
-      masked=parts.join(SENT+"M"+SENT);
-    });
-    return {masked,count,catCount};
+    let masked=text,count=0;const cc={};
+    WORDS.forEach(({w,c})=>{if(masked.indexOf(w)<0)return;const p=masked.split(w);const n=p.length-1;count+=n;cc[c]=(cc[c]||0)+n;masked=p.join(SENT+"M"+SENT);});
+    return {masked,count,cc};
   }
+  function findTopics(text){const f=[];TOPICS.forEach(w=>{if(text.includes(w)&&!f.some(x=>x.includes(w)||w.includes(x)))f.push(w);});return f.slice(0,6);}
+
   function render(){
-    const text=$("inp").value;
-    const box=$("result");
-    if(!text.trim()){ box.innerHTML=""; return; }
-    const {masked,count,catCount}=maskComment(text);
-    const total=[...text].length;
-    // 判定
-    let vClass,vHtml;
-    if(count===0){ vClass="clean"; vHtml="<b>汚い言葉は見つかりませんでした。</b>　落ち着いて読めそうです。"; }
-    else {
-      const heavy = count>=3 || (count*3/Math.max(total,1))>0.25;
-      vClass = heavy ? "heavy" : "some";
-      vHtml = `<b>暴言を ${count}個 見つけて伏せました。</b>` + (heavy
-        ? "　ほぼ悪意のコメントかもしれません。<b>無理に読まなくて大丈夫</b>です。"
-        : "　一部きつい言葉を伏せました。落ち着いて読めます。");
-    }
-    const cats=Object.keys(catCount).sort((a,b)=>catCount[b]-catCount[a]);
-    const chips=cats.length?`<div class="catchips">${cats.map(c=>`<span class="catchip">${esc(c)} ×${catCount[c]}</span>`).join("")}</div>`:"";
-    // 伏せ字描画
+    const text=$("inp").value;const box=$("result");
+    if(!text.trim()){box.innerHTML="";return;}
+    const {masked,count,cc}=maskComment(text);
+    const topics=findTopics(text);
     const safe=esc(masked).split(SENT+"M"+SENT).join('<span class="masked">〇〇</span>');
-    box.innerHTML =
-      `<div class="verdict ${vClass}">${vHtml}${chips}</div>`+
-      `<div class="out-h"><span class="t">毒抜き後</span></div>`+
-      `<div class="out">${safe}</div>`+
-      (count>0?`<div class="raw-toggle" id="rawT">原文をそのまま見る（つらければ開かないで）</div><div class="raw" id="rawBox">${esc(text)}</div>`:"");
-    if(count>0){ const t=$("rawT"); t.onclick=()=>{const r=$("rawBox");const open=r.style.display==="block";r.style.display=open?"none":"block";t.textContent=open?"原文をそのまま見る（つらければ開かないで）":"原文を隠す";}; }
+    const cats=Object.keys(cc).sort((a,b)=>cc[b]-cc[a]);
+    const chips=cats.length?`<div class="catchips">${cats.map(c=>`<span class="catchip">${esc(c)} ×${cc[c]}</span>`).join("")}</div>`:"";
+
+    let html="";
+    const type=TYPES.find(t=>t.test(text,cc)) || TYPES[TYPES.length-1];
+    if(count===0 && topics.length===0 && type.key==="pure"){
+      html=`<div class="verdict clean"><span class="vlabel">汚い言葉は見つかりませんでした</span><div class="meta">落ち着いて読めそうです。</div></div>`;
+    } else {
+      const vcls = count===0 ? "some" : type.cls;
+      html += `<div class="verdict ${vcls}"><span class="vlabel">${esc(type.label)}</span>　— <span class="judge">${esc(type.judge)}</span>`+
+        (count>0?`<div class="meta">暴言 ${count}個 を伏せました</div>${chips}`:`<div class="meta">汚い言葉はなし</div>`)+`</div>`;
+      html += `<div class="blk"><span class="th">これは要は…</span>${esc(type.yaku)}</div>`;
+      if(topics.length) html += `<div class="blk"><span class="th">触れていた点（拾えるとしたらここ）</span><span class="topicwords">${topics.map(esc).join(" / ")}</span> — この点だけ、改善のヒントになるか見てみて。</div>`;
+      html += `<div class="blk sample"><span class="th">もし良い言い方にするなら</span><span class="body">${esc(type.sample)}</span></div>`;
+    }
+    html += `<div class="out-h"><span class="t">毒抜き後の本文</span></div><div class="out">${safe}</div>`;
+    if(count>0) html += `<div class="raw-toggle" id="rawT">原文をそのまま見る（つらければ開かないで）</div><div class="raw" id="rawBox">${esc(text)}</div>`;
+    box.innerHTML=html;
+    if(count>0){const t=$("rawT");t.onclick=()=>{const r=$("rawBox");const open=r.style.display==="block";r.style.display=open?"none":"block";t.textContent=open?"原文をそのまま見る（つらければ開かないで）":"原文を隠す";};}
   }
   $("inp").addEventListener("input",render);
   $("run").onclick=render;

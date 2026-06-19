@@ -312,6 +312,9 @@
     if(navigator.share){const sh=el("button","btn");sh.textContent="送る";
       sh.onclick=async()=>{const txt=plainQuote(p[t.key],getReason());try{await navigator.share({text:txt});addRecent(p.id);}catch(e){}};
       btns.appendChild(sh);}
+    const img=el("button","btn");img.textContent="画像";
+    img.onclick=()=>{shareCard(p,t,getReason());addRecent(p.id);};
+    btns.appendChild(img);
     head.appendChild(nm);head.appendChild(btns);
     const q=el("div","quote");q.dataset.src=p[t.key];q.innerHTML=renderQuote(p[t.key],getReason());
     tn.appendChild(head);tn.appendChild(q);return tn;
@@ -319,6 +322,53 @@
   function doCopy(txt,btn){const ok=()=>{const o=btn.textContent;btn.textContent="✓ コピー";btn.classList.add("done");setTimeout(()=>{btn.textContent=o;btn.classList.remove("done");},1400);};
     if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,ok);}
     else{const ta=el("textarea");ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand("copy")}catch(e){}ta.remove();ok();}}
+
+  // ---- 結果カードを画像化してシェア ----
+  function wrapText(ctx,text,x0,y0,maxW,lh){
+    let line="",y=y0;
+    for(const ch of text){
+      if(ch==="\n"){ctx.fillText(line,x0,y);line="";y+=lh;continue;}
+      const test=line+ch;
+      if(ctx.measureText(test).width>maxW&&line){ctx.fillText(line,x0,y);line=ch;y+=lh;}
+      else line=test;
+    }
+    if(line){ctx.fillText(line,x0,y);y+=lh;}
+    return y;
+  }
+  async function drawCard(p,t,txt){
+    const W=1080,H=1350,c=document.createElement("canvas");c.width=W;c.height=H;const x=c.getContext("2d");
+    x.fillStyle="#FAF9F6";x.fillRect(0,0,W,H);
+    x.strokeStyle="#E7E3DC";x.lineWidth=2;x.strokeRect(40,40,W-80,H-80);
+    try{await document.fonts.load('700 52px "Shippori Mincho"');await document.fonts.load('500 44px "Noto Sans JP"');await document.fonts.load('700 30px "Noto Sans JP"');}catch(e){}
+    const M=110;
+    x.textBaseline="alphabetic";
+    x.fillStyle="#9C6B3F";x.font='500 26px "Noto Sans JP"';
+    const tagline = p.mode==="soften" ? ("カッとなった一言　｜　"+tagOf(p)) : (personLabel(p.person)+"　｜　"+tagOf(p));
+    x.fillText(tagline,M,160);
+    x.fillStyle="#1A1A1A";x.font='700 52px "Shippori Mincho"';
+    let ty=wrapText(x,(p.mode==="soften"?"「"+p.title+"」":p.title),M,240,W-2*M,68);
+    x.fillStyle="#9C6B3F";x.fillRect(M,ty+8,60,3);
+    x.fillStyle="#9C6B3F";x.font='700 30px "Noto Sans JP"';
+    x.fillText(t.dots+"  "+t.label,M,ty+82);
+    x.fillStyle="#1A1A1A";x.font='500 44px "Noto Sans JP"';
+    wrapText(x,txt,M,ty+156,W-2*M,72);
+    x.fillStyle="#9C6B3F";x.font='700 30px "Shippori Mincho"';x.fillText("角が立たない言い換えメーカー",M,H-128);
+    x.fillStyle="#8A857E";x.font='400 26px "Noto Sans JP"';x.fillText("chiiita.github.io/iikae",M,H-86);
+    return c;
+  }
+  async function shareCard(p,t,getReason){
+    const txt=plainQuote(p[t.key],getReason());
+    const canvas=await drawCard(p,t,txt);
+    canvas.toBlob(blob=>{
+      if(!blob)return;
+      const file=new File([blob],"iikae.png",{type:"image/png"});
+      if(navigator.canShare&&navigator.canShare({files:[file]})){
+        navigator.share({files:[file],text:"角が立たない言い換えメーカー"}).catch(()=>{});
+      }else{
+        const u=URL.createObjectURL(blob);const a=document.createElement("a");a.href=u;a.download="iikae.png";a.click();setTimeout(()=>URL.revokeObjectURL(u),1500);
+      }
+    },"image/png");
+  }
 
   function currentList(){
     if(state.focusId){const p=byId(state.focusId);return{list:p?[p]:[],title:"保存した言い方",showPerson:true};}
